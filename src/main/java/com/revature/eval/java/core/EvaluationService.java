@@ -1,8 +1,6 @@
 package com.revature.eval.java.core;
-
+import java.util.*;
 import java.time.temporal.Temporal;
-import java.util.List;
-import java.util.Map;
 
 public class EvaluationService {
 
@@ -30,8 +28,12 @@ public class EvaluationService {
 	 * @return
 	 */
 	public String acronym(String phrase) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		String[] input = phrase.split("[ -]");
+		String output = "";
+		for (String l:input) {
+			output = output + l.substring(0,1).toUpperCase();
+		}		
+		return output;
 	}
 
 	/**
@@ -84,17 +86,24 @@ public class EvaluationService {
 		}
 
 		public boolean isEquilateral() {
-			// TODO Write an implementation for this method declaration
+			if (sideOne == sideTwo && sideTwo == sideThree) {
+				return true;
+			}
 			return false;
 		}
 
+		//Fix later to prevent Equilateral returning true
 		public boolean isIsosceles() {
-			// TODO Write an implementation for this method declaration
+			if (sideOne == sideTwo || sideOne == sideThree || sideTwo == sideThree) {
+				return true;
+			}
 			return false;
 		}
 
 		public boolean isScalene() {
-			// TODO Write an implementation for this method declaration
+			if (sideOne != sideTwo && sideTwo != sideThree && sideOne != sideThree) {
+				return true;
+			}
 			return false;
 		}
 
@@ -116,10 +125,56 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int getScrabbleScore(String string) {
-		// TODO Write an implementation for this method declaration
-		return 0;
+		char[] onePoint = {'A','E','I','O','U','L','N','R','S','T'};
+		char[] twoPoints = {'D','G'};
+		char[] threePoints = {'B','C','M','P'};
+		char[] fourPoints = {'F','H','V','W','Y'};
+		char[] fivePoints = {'K'};
+		char[] eightPoints = {'X'};
+		char[] tenPoints = {'Q','Z'};
+		int totalScore = 0;		
+		String stringCaps = string.toUpperCase();
+		
+		for (int x = 0; x < stringCaps.length(); x++) {
+			char checkChar = stringCaps.charAt(x);
+			for (char c:onePoint) {
+				if (c == checkChar) {
+					totalScore = totalScore + 1;
+				}
+			}
+			for (char c:twoPoints) {
+				if (c == checkChar) {
+					totalScore = totalScore + 2;
+				}
+			}
+			for (char c:threePoints) {
+				if (c == checkChar) {
+					totalScore = totalScore + 3;
+				}
+			}
+			for (char c:fourPoints) {
+				if (c == checkChar) {
+					totalScore = totalScore + 4;
+				}
+			}
+			for (char c:fivePoints) {
+				if (c == checkChar) {
+					totalScore = totalScore + 5;
+				}
+			}
+			for (char c:eightPoints) {
+				if (c == checkChar) {
+					totalScore = totalScore + 8;
+				}				
+			}
+			for (char c:tenPoints) {
+				if (c == checkChar) {
+					totalScore = totalScore + 10;
+				}
+			}	
+		}
+		return totalScore;
 	}
-
 	/**
 	 * 5. Clean up user-entered phone numbers so that they can be sent SMS messages.
 	 * 
@@ -152,7 +207,13 @@ public class EvaluationService {
 	 * NANP-countries, only 1 is considered a valid country code.
 	 */
 	public String cleanPhoneNumber(String string) {
-		// TODO Write an implementation for this method declaration
+		String[] punctuation = {" ",".","-","+1","(",")"};
+		String cleanNumber = "";
+		char checkNumber;
+		
+		for (int x = 0; x < string.length(); x++) {
+			
+		}
 		return null;
 	}
 
@@ -166,8 +227,18 @@ public class EvaluationService {
 	 * @return
 	 */
 	public Map<String, Integer> wordCount(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		String[] words = string.split(" ");
+		HashMap<String, Integer> wordCount = new HashMap<String, Integer>();
+		Integer count = 1;
+		for(int x = 0; x < words.length; x++) {
+			for (int y = x + 1; y < words.length; y++) {
+				if (words[x].equals(words[y])) {
+					count++;
+				}
+			}
+		wordCount.put(words[x], count);	
+		}
+		return wordCount;
 	}
 
 	/**
@@ -246,8 +317,25 @@ public class EvaluationService {
 	 * @return
 	 */
 	public String toPigLatin(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		char[] vowels = {'a','e','i','o','u'};
+		String[] edgeCases = {"sch"};
+		String pigLatin = "";
+		char checkFirst = string.charAt(0);
+		String checkFirstStr = string.substring(0,2);
+		for (String e:edgeCases) {
+			if (e == checkFirstStr) {
+				return string.substring(3,string.length()) + string.substring(0,3) + "ay";
+			} else continue;
+		}
+		for (char v:vowels) {
+			if (v == checkFirst) {
+				pigLatin = string + "ay";
+				return pigLatin;
+			} else {
+				pigLatin = string.substring(1, string.length()) + string.substring(0,1) + "ay";
+			}
+		}
+		return pigLatin;
 	}
 
 	/**
@@ -266,8 +354,22 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isArmstrongNumber(int input) {
-		// TODO Write an implementation for this method declaration
-		return false;
+		int sumDigits = 0;
+		int runningSum = 0;
+		ArrayList<Integer> numArr = new ArrayList<Integer>();
+		
+		//turn input into int arraylist
+		while (input > 0) {
+			numArr.add(input % 10);
+			input = input/10;
+		}
+		
+		//loop through arraylist to sum digits
+		for (int x = 0; x < numArr.size(); x++) {
+			runningSum = (int) Math.pow(numArr.get(x),numArr.size());
+			sumDigits = sumDigits + runningSum;
+		}		
+		return (sumDigits == input);
 	}
 
 	/**
@@ -281,8 +383,15 @@ public class EvaluationService {
 	 * @return
 	 */
 	public List<Long> calculatePrimeFactorsOf(long l) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		ArrayList<Long> longArr = new ArrayList<>();
+			
+		for (long x = 2; x <= l; x++) {
+			while (l % x == 0) {
+				longArr.add(x);
+				l /= x;
+			}
+		}
+		return longArr;
 	}
 
 	/**
@@ -320,11 +429,16 @@ public class EvaluationService {
 		}
 
 		public String rotate(String string) {
-			// TODO Write an implementation for this method declaration
-			return null;
+			char[] upperAlphabet = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
+			char[] lowerAlphabet = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
+			List<String> rotated = new ArrayList<String>(); 
+			int key = Integer.parseInt(string.substring(3,string.length()));
+			for (char c:upperAlphabet) {
+				
+			}			
+				
+			}
 		}
-
-	}
 
 	/**
 	 * 12. Given a number n, determine what the nth prime is.
@@ -339,10 +453,22 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int calculateNthPrime(int i) {
-		// TODO Write an implementation for this method declaration
-		return 0;
+		int count = 1;
+		int prime = 0;
+		while (count <= i) {
+			int nextNum = 2;
+			for (int x = 2; x <= nextNum; x++) { 
+				if (x == nextNum) {
+					prime = nextNum;
+					count++;
+					nextNum++;
+				} else if (nextNum % x == 0) {
+					nextNum++;
+				}
+			}
+		}
+		return prime;
 	}
-
 	/**
 	 * 13 & 14. Create an implementation of the atbash cipher, an ancient encryption
 	 * system created in the Middle East.
@@ -415,8 +541,27 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isValidIsbn(String string) {
-		// TODO Write an implementation for this method declaration
-		return false;
+		char[] input = new char[string.length()];
+		int runningSum = 0;
+		for (int x = 0; x < string.length(); x++) {
+			if (string.charAt(x) == '-') {
+				input[x] = string.charAt(x+1);
+				++x;
+			}
+			else if (string.charAt(x) == 'X') {
+				input[x] = 10;
+			} else {
+				input[x] = string.charAt(x);
+			}
+		}
+
+		for (int x = 10; x > 0; x--) {
+			for (int y = 0; y < input.length; y++) {
+				runningSum += ((int) input[y]) * x;
+			}
+		}
+		System.out.println(runningSum);
+		return (runningSum % 11 == 0);
 	}
 
 	/**
@@ -433,7 +578,21 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isPangram(String string) {
-		// TODO Write an implementation for this method declaration
+		int count = 0;
+		char[] input = new char[string.length()];
+		List<Character> alphabet = new ArrayList<>(Arrays.asList('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'));
+		for (int x = 0; x < string.length(); x++) {
+			input[x] = string.charAt(x);
+		}
+		for (int x = 0; x < input.length; x++) {
+			if (alphabet.get(x) == input[x]) {
+				alphabet.remove(x);
+				count++;
+				if (count == 26) {
+					return true;
+				}
+			}
+		}
 		return false;
 	}
 
