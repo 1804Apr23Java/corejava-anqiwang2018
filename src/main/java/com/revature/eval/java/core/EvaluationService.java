@@ -207,14 +207,26 @@ public class EvaluationService {
 	 * NANP-countries, only 1 is considered a valid country code.
 	 */
 	public String cleanPhoneNumber(String string) {
-		String[] punctuation = {" ",".","-","+1","(",")"};
-		String cleanNumber = "";
-		char checkNumber;
-		
+		String[] punctuation = {" ",".","-","+","(",")"};
+		List<String> cleanNumber = new ArrayList<String>();
+		String cleanString = "";
 		for (int x = 0; x < string.length(); x++) {
-			
+			String checkNumber = string.charAt(x) + "";		
+			for (int y = 0; y < punctuation.length; y++) {
+				if (checkNumber.equals(punctuation[y])) {
+					checkNumber = "";
+				}
+			}
+			cleanNumber.add(checkNumber);
 		}
-		return null;
+		if (cleanNumber.size() != 10 && cleanNumber.get(0).equals("1")) {
+			cleanNumber.remove(0);
+		}
+		
+		for (String s: cleanNumber) {
+			cleanString = cleanString + s;
+		}
+		return cleanString;
 	}
 
 	/**
@@ -436,7 +448,7 @@ public class EvaluationService {
 			for (char c:upperAlphabet) {
 				
 			}			
-				
+			return null;	
 			}
 		}
 
