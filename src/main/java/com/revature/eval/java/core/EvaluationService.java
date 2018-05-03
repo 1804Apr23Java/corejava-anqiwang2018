@@ -467,7 +467,7 @@ public class EvaluationService {
 	public int calculateNthPrime(int i) {
 		int count = 1;
 		int prime = 0;
-		while (count <= i) {
+		/* while (count <= i) {
 			int nextNum = 2;
 			for (int x = 2; x <= nextNum; x++) { 
 				if (x == nextNum) {
@@ -478,7 +478,7 @@ public class EvaluationService {
 					nextNum++;
 				}
 			}
-		}
+		} */
 		return prime;
 	}
 	/**
@@ -577,7 +577,7 @@ public class EvaluationService {
 	}
 
 	/**
-	 * 16. Determine if a sentence is a pangram. A pangram (Greek: παν γράμμα, pan
+	 * 16. Determine if a sentence is a pangram. A pangram (Greek: Ï€Î±Î½ Î³Ï�Î¬Î¼Î¼Î±, pan
 	 * gramma, "every letter") is a sentence using every letter of the alphabet at
 	 * least once. The best known English pangram is:
 	 * 
